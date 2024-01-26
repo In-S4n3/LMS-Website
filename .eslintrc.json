@@ -1,0 +1,76 @@
+{
+  "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "tailwindcss/no-arbitrary-value": "off",
+        "no-unused-vars": "warn",
+        "react/no-unescaped-entities": "off",
+        "no-console": [
+          1,
+          {
+            "allow": ["warn", "error"]
+          }
+        ],
+        "react/jsx-curly-brace-presence": [
+          "error",
+          {
+            "props": "never",
+            "children": "never",
+            "propElementValues": "always"
+          }
+        ],
+        "no-shadow": [
+          "warn",
+          {
+            "builtinGlobals": false,
+            "hoist": "functions",
+            "allow": [],
+            "ignoreOnInitialization": false
+          }
+        ],
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              "internal",
+              ["parent", "sibling"]
+            ],
+            "pathGroups": [
+              {
+                "pattern": "react",
+                "group": "external",
+                "position": "before"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": ["react"],
+            "newlines-between": "always",
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            }
+          }
+        ],
+        "prefer-const": [
+          "error",
+          {
+            "destructuring": "any",
+            "ignoreReadBeforeAssign": false
+          }
+        ],
+        "comma-dangle": ["error", "always-multiline"],
+        "semi": ["error", "always"],
+        "no-undef": "off"
+      }
+    }
+  ],
+  "settings": {
+    "tailwindcss": {
+      "callees": ["cn", "classnames", "clsx"]
+    }
+  }
+}
