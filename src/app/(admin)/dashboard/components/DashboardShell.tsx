@@ -6,8 +6,8 @@ import { useDisclosure } from '@mantine/hooks';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { FaVideo } from 'react-icons/fa';
-import { ImBlogger } from 'react-icons/im';
+import { IoAnalyticsOutline } from 'react-icons/io5';
+import { LiaChalkboardTeacherSolid } from 'react-icons/lia';
 
 import { Logo, Logomark } from '@/src/components/Logo';
 
@@ -15,14 +15,14 @@ import { UserButton } from './UserButton';
 
 const navItems = [
   {
-    icon: <FaVideo fill="white" />,
-    label: 'Manage Videos',
-    href: '/dashboard/videos',
+    leftSection: <LiaChalkboardTeacherSolid fill="white" />,
+    label: 'Courses',
+    href: '/dashboard/courses',
   },
   {
-    icon: <ImBlogger fill="white" />,
-    label: 'Manage Blog',
-    href: '/dashboard/blog',
+    leftSection: <IoAnalyticsOutline stroke="white" />,
+    label: 'Analytics',
+    href: '/dashboard/analytics',
   },
 ];
 
@@ -71,7 +71,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 'rounded-lg py-8 font-semibold text-indigo-400 shadow-xl hover:bg-indigo-400/10 hover:text-indigo-200',
                 active === index && 'bg-indigo-400/10 text-2xl text-indigo-200',
               )}
-              leftSection={item.icon}
             />
           ))}
         </div>
