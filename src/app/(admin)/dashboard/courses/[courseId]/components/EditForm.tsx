@@ -16,6 +16,7 @@ export const EditForm = () => {
     defaultValues: {
       title: '',
       description: '',
+      imageUrl: '',
       // categoryId: '',
     },
   });
@@ -73,7 +74,7 @@ export const EditForm = () => {
               <Dropzone
                 endpoint="courseImage"
                 onChange={(url) => {
-                  console.log(url);
+                  editForm.setValue('imageUrl', url as string);
                 }}
               />
             </div>
