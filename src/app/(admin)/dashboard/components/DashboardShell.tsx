@@ -1,12 +1,12 @@
 'use client';
 import { useState } from 'react';
 
-import { AppShell, Burger, Group, NavLink } from '@mantine/core';
+import { AppShell, Burger, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { IoAnalyticsOutline } from 'react-icons/io5';
+import { IoMdAnalytics } from 'react-icons/io';
 import { LiaChalkboardTeacherSolid } from 'react-icons/lia';
 
 import { Logo, Logomark } from '@/src/components/Logo';
@@ -15,12 +15,12 @@ import { UserButton } from './UserButton';
 
 const navItems = [
   {
-    leftSection: <LiaChalkboardTeacherSolid fill="white" />,
+    icon: <LiaChalkboardTeacherSolid fill="white" />,
     label: 'Courses',
     href: '/dashboard/courses',
   },
   {
-    leftSection: <IoAnalyticsOutline stroke="white" />,
+    icon: <IoMdAnalytics fill="white" />,
     label: 'Analytics',
     href: '/dashboard/analytics',
   },
@@ -62,16 +62,18 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <AppShell.Navbar p="md" className="flex justify-between bg-neutral-900">
         <div>
           {navItems.map((item, index) => (
-            <NavLink
-              {...item}
+            <Link
+              href={item.href}
               key={item.label}
-              active={index === active}
               onClick={() => setActive(index)}
               className={clsx(
-                'rounded-lg py-8 font-semibold text-indigo-400 shadow-xl hover:bg-indigo-400/10 hover:text-indigo-200',
-                active === index && 'bg-indigo-400/10 text-2xl text-indigo-200',
+                'my-1 flex items-center gap-x-2 rounded-lg py-4 pl-2 font-semibold text-indigo-200 shadow-xl hover:bg-indigo-400/10 hover:text-indigo-400',
+                active === index && 'bg-indigo-400/10 text-xl text-indigo-400',
               )}
-            />
+            >
+              <span>{item.icon}</span>
+              {item.label}
+            </Link>
           ))}
         </div>
         <UserButton user={user} />

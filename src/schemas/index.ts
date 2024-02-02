@@ -88,3 +88,20 @@ export const RegisterSchema = z.object({
     message: 'Name is required',
   }),
 });
+
+export const EditFormSchema = z.object({
+  title: z
+    .string()
+    .min(1, { message: 'Please, write your title' })
+    .max(20, { message: 'Your title is too long' }),
+  description: z.string().min(1, {
+    message: 'Description is required',
+  }),
+  // categoryId: z.string().min(1),
+});
+
+export const ImageSchema = z.object({
+  imageUrl: z.string().min(1, {
+    message: 'Image is required',
+  }),
+});

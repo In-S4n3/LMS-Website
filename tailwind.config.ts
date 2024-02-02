@@ -1,7 +1,8 @@
 import { type Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import { withUt } from 'uploadthing/tw';
 
-export default {
+export default withUt({
   content: ['./src/**/*.{js,jsx,mdx,ts,tsx}'],
   theme: {
     fontSize: {
@@ -31,4 +32,4 @@ export default {
     },
   },
   plugins: [require('@tailwindcss/forms')],
-} satisfies Config;
+}) satisfies Config;

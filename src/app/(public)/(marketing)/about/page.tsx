@@ -22,6 +22,7 @@ import imageLeonardKrasner from '@/images/team/leonard-krasner.jpg';
 import imageLeslieAlexander from '@/images/team/leslie-alexander.jpg';
 import imageMichaelFoster from '@/images/team/michael-foster.jpg';
 import imageWhitneyFrancis from '@/images/team/whitney-francis.jpg';
+
 import { loadArticles } from '@/lib/mdx';
 
 function Culture() {

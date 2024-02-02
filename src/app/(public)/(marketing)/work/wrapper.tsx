@@ -4,6 +4,7 @@ import { FadeIn } from '@/components/FadeIn';
 import { GrayscaleTransitionImage } from '@/components/GrayscaleTransitionImage';
 import { PageIntro } from '@/components/PageIntro';
 import { PageLinks } from '@/components/PageLinks';
+
 import { type CaseStudy, type MDXEntry, loadCaseStudies } from '@/lib/mdx';
 
 export default async function CaseStudyLayout({

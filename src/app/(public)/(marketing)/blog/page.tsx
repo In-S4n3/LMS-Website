@@ -9,6 +9,7 @@ import { Container } from '@/components/Container';
 import { FadeIn } from '@/components/FadeIn';
 import { PageIntro } from '@/components/PageIntro';
 import { formatDate } from '@/lib/formatDate';
+
 import { loadArticles } from '@/lib/mdx';
 
 export const metadata: Metadata = {

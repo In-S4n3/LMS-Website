@@ -88,7 +88,7 @@ function Header({
         <div className="flex items-center gap-x-8">
           {session.status === 'authenticated' && (
             <Button invert={invert} onClick={() => logout()}>
-              Sign out
+              Sign Out
             </Button>
           )}
           <Button href="/contact" invert={invert}>

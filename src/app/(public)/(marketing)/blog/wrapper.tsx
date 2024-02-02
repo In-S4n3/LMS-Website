@@ -3,6 +3,7 @@ import { Container } from '@/components/Container';
 import { FadeIn } from '@/components/FadeIn';
 import { PageLinks } from '@/components/PageLinks';
 import { formatDate } from '@/lib/formatDate';
+
 import { type Article, type MDXEntry, loadArticles } from '@/lib/mdx';
 
 export default async function BlogArticleWrapper({
