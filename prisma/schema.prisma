@@ -99,7 +99,6 @@ model Attachment {
 model Category {
   id String @id @default(uuid())
   name String @db.Text
-  slug String @unique
   courses Course[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

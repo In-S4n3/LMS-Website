@@ -3,11 +3,11 @@
 import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ActionIcon, TextInput } from '@mantine/core';
+import { ActionIcon, Select, TextInput, Textarea } from '@mantine/core';
 import axios from 'axios';
-import clsx from 'clsx';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { FaRegEdit } from 'react-icons/fa';
 import { z } from 'zod';
 
@@ -19,9 +19,11 @@ import { Dropzone } from './Dropzone';
 export const EditForm = ({
   initialData,
   courseId,
+  categories,
 }: {
   initialData: Record<string, any>;
   courseId: string;
+  categories: Record<string, any>[];
 }) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -34,16 +36,20 @@ export const EditForm = ({
   const onSubmit = async (values: z.infer<typeof EditFormSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
+      toast.success('Course updated');
     } catch (err) {
       console.log(err);
+      toast.error('Something went wrong');
     }
   };
 
   const onSubmitImage = async (url: z.infer<typeof ImageSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, url);
+      toast.success('Course updated');
     } catch (err) {
       console.log(err);
+      toast.error('Something went wrong');
     }
   };
 
@@ -77,7 +83,7 @@ export const EditForm = ({
               Description
             </label>
             <div className="mt-2">
-              <TextInput
+              <Textarea
                 {...editForm.register('description')}
                 id="description"
                 radius="md"
@@ -97,12 +103,7 @@ export const EditForm = ({
 
             {initialData.imageUrl && !isEditing && (
               <div className="relative mt-2 aspect-video">
-                <div
-                  className={clsx(
-                    'z-50 flex items-center justify-end font-medium',
-                    initialData.imageUrl && 'absolute right-2 top-2',
-                  )}
-                >
+                <div className="absolute right-2 top-2 z-50 flex items-center justify-end font-medium">
                   {initialData.imageUrl && (
                     <ActionIcon className="bg-indigo-500" onClick={toggleEdit}>
                       <FaRegEdit fill="white" />
@@ -120,12 +121,7 @@ export const EditForm = ({
             {!initialData.imageUrl ||
               (isEditing && (
                 <div className="relative">
-                  <div
-                    className={clsx(
-                      'z-50 flex items-center justify-end font-medium',
-                      initialData.imageUrl && 'absolute right-2 top-2',
-                    )}
-                  >
+                  <div className="absolute right-2 top-2 z-50 flex items-center justify-end font-medium">
                     {initialData.imageUrl && (
                       <ActionIcon
                         className="bg-indigo-500"
@@ -150,7 +146,27 @@ export const EditForm = ({
                 </div>
               ))}
           </div>
-
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              Category
+            </label>
+            <div className="mt-2">
+              <Select
+                defaultValue={initialData.categoryId}
+                placeholder="Select category"
+                data={categories.map((category) => ({
+                  value: category.id,
+                  label: category.name,
+                }))}
+                onChange={(value) => {
+                  editForm.setValue('categoryId', value as string);
+                }}
+              />
+            </div>
+          </div>
           <div>
             <Button type="submit" className="flex w-full justify-center">
               Edit

@@ -1,3 +1,5 @@
+import { ToastProvider } from '@/src/components/providers/toaster-provider';
+
 import { DashboardShell } from './dashboard/components/DashboardShell';
 
 export default function DashboardLayout({
@@ -5,5 +7,10 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <DashboardShell>{children}</DashboardShell>;
+  return (
+    <DashboardShell>
+      <ToastProvider />
+      {children}
+    </DashboardShell>
+  );
 }

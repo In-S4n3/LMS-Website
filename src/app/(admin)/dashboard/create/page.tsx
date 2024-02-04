@@ -1,11 +1,11 @@
 'use client';
-import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert, TextInput } from '@mantine/core';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { IoIosAlert } from 'react-icons/io';
 import { z } from 'zod';
 
@@ -19,7 +19,6 @@ const formSchema = z.object({
 });
 
 const CreatePage = () => {
-  const [toasterError, setToasterError] = useState('');
   const { push } = useRouter();
 
   const createForm = useForm<z.infer<typeof formSchema>>({
@@ -42,9 +41,10 @@ const CreatePage = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const res = await axios.post('/api/courses', data);
+      toast.success('Course created');
       push(`/dashboard/courses/${res.data.id}`);
     } catch (error: any) {
-      setToasterError(error.message);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -71,7 +71,6 @@ const CreatePage = () => {
             />
           </div>
         </div>
-        {toasterError && toaster(toasterError)}
         <div>
           <Button
             type="submit"

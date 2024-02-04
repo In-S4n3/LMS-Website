@@ -97,7 +97,7 @@ export const EditFormSchema = z.object({
   description: z.string().min(1, {
     message: 'Description is required',
   }),
-  // categoryId: z.string().min(1),
+  categoryId: z.string().min(1),
 });
 
 export const ImageSchema = z.object({

@@ -16,6 +16,15 @@ const fetchCourse = async (courseId: string, userId: string) => {
   return course;
 };
 
+const fetchCategories = async () => {
+  const categories = await prisma.category.findMany({
+    orderBy: {
+      name: 'asc',
+    },
+  });
+  return categories;
+};
+
 const CourseIdPage = async ({
   params: { courseId },
 }: {
@@ -24,6 +33,7 @@ const CourseIdPage = async ({
   const session = await auth();
   const user = session?.user;
   const course = await fetchCourse(courseId, user?.id as string);
+  const categories = await fetchCategories();
 
   if (!course) {
     redirect('/dashboard/courses');
@@ -57,7 +67,11 @@ const CourseIdPage = async ({
             <MdOutlineDashboardCustomize fill="blue" size={25} />
             <h2 className="text-xl">Customize your course</h2>
           </div>
-          <EditForm initialData={course} courseId={courseId} />
+          <EditForm
+            initialData={course}
+            courseId={courseId}
+            categories={categories}
+          />
         </div>
         <div className="space-y-6">
           <div>
