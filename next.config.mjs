@@ -1,22 +1,30 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'tailwindui.com',
         port: '',
-        pathname: '/dashboard',
+        pathname: '/**',
       },
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 'images.unsplash.com',
         port: '',
-        pathname: '/dashboard',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        port: '',
+        pathname: '/**',
       },
     ],
     dangerouslyAllowSVG: true,
   },
 };
 
+export default nextConfig;

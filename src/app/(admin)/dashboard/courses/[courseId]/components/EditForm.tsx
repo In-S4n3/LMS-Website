@@ -1,28 +1,50 @@
 'use client';
 
+import { useState } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TextInput } from '@mantine/core';
+import { ActionIcon, TextInput } from '@mantine/core';
+import axios from 'axios';
+import clsx from 'clsx';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
+import { FaRegEdit } from 'react-icons/fa';
 import { z } from 'zod';
 
 import { Button } from '@/src/components/Button';
-import { EditFormSchema } from '@/src/schemas';
+import { EditFormSchema, ImageSchema } from '@/src/schemas';
 
 import { Dropzone } from './Dropzone';
 
-export const EditForm = () => {
+export const EditForm = ({
+  initialData,
+  courseId,
+}: {
+  initialData: Record<string, any>;
+  courseId: string;
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const toggleEdit = () => setIsEditing((current) => !current);
   const editForm = useForm<z.infer<typeof EditFormSchema>>({
     resolver: zodResolver(EditFormSchema),
-    defaultValues: {
-      title: '',
-      description: '',
-      imageUrl: '',
-      // categoryId: '',
-    },
+    defaultValues: initialData,
   });
 
   const onSubmit = async (values: z.infer<typeof EditFormSchema>) => {
-    console.log(values);
+    try {
+      await axios.patch(`/api/courses/${courseId}`, values);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onSubmitImage = async (url: z.infer<typeof ImageSchema>) => {
+    try {
+      await axios.patch(`/api/courses/${courseId}`, url);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -43,6 +65,7 @@ export const EditForm = () => {
                 radius="md"
                 className="block w-full border-0 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 autoComplete="text"
+                error={editForm.formState.errors.title?.message}
               />
             </div>
           </div>
@@ -60,6 +83,7 @@ export const EditForm = () => {
                 radius="md"
                 className="block w-full border-0 py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 autoComplete="text"
+                error={editForm.formState.errors.description?.message}
               />
             </div>
           </div>
@@ -70,14 +94,61 @@ export const EditForm = () => {
             >
               Course Image
             </label>
-            <div className="mt-2">
-              <Dropzone
-                endpoint="courseImage"
-                onChange={(url) => {
-                  editForm.setValue('imageUrl', url as string);
-                }}
-              />
-            </div>
+
+            {initialData.imageUrl && !isEditing && (
+              <div className="relative mt-2 aspect-video">
+                <div
+                  className={clsx(
+                    'z-50 flex items-center justify-end font-medium',
+                    initialData.imageUrl && 'absolute right-2 top-2',
+                  )}
+                >
+                  {initialData.imageUrl && (
+                    <ActionIcon className="bg-indigo-500" onClick={toggleEdit}>
+                      <FaRegEdit fill="white" />
+                    </ActionIcon>
+                  )}
+                </div>
+                <Image
+                  alt="Upload"
+                  fill
+                  className="rounded-md object-cover"
+                  src={initialData.imageUrl}
+                />
+              </div>
+            )}
+            {!initialData.imageUrl ||
+              (isEditing && (
+                <div className="relative">
+                  <div
+                    className={clsx(
+                      'z-50 flex items-center justify-end font-medium',
+                      initialData.imageUrl && 'absolute right-2 top-2',
+                    )}
+                  >
+                    {initialData.imageUrl && (
+                      <ActionIcon
+                        className="bg-indigo-500"
+                        onClick={toggleEdit}
+                      >
+                        <FaRegEdit fill="white" />
+                      </ActionIcon>
+                    )}
+                  </div>
+                  <Dropzone
+                    endpoint="courseImage"
+                    onChange={(url) => {
+                      if (url)
+                        onSubmitImage({
+                          imageUrl: url,
+                        });
+                    }}
+                  />
+                  <div className="mt-4 text-xs">
+                    16:9 aspect ratio recommended
+                  </div>
+                </div>
+              ))}
           </div>
 
           <div>

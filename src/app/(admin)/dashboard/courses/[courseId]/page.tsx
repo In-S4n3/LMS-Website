@@ -57,7 +57,7 @@ const CourseIdPage = async ({
             <MdOutlineDashboardCustomize fill="blue" size={25} />
             <h2 className="text-xl">Customize your course</h2>
           </div>
-          <EditForm />
+          <EditForm initialData={course} courseId={courseId} />
         </div>
         <div className="space-y-6">
           <div>
