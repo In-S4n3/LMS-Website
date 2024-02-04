@@ -105,3 +105,7 @@ export const ImageSchema = z.object({
     message: 'Image is required',
   }),
 });
+
+export const PriceSchema = z.object({
+  price: z.coerce.number(),
+});

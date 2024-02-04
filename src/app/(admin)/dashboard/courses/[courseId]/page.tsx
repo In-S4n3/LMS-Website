@@ -1,10 +1,15 @@
 import { redirect } from 'next/navigation';
-import { MdOutlineDashboardCustomize } from 'react-icons/md';
+import {
+  LuCircleDollarSign,
+  LuLayoutDashboard,
+  LuListChecks,
+} from 'react-icons/lu';
 
 import { auth } from '@/auth';
 import { prisma } from '@/lib/prismaClient';
 
 import { EditForm } from './components/EditForm';
+import { PriceForm } from './components/PriceForm';
 
 const fetchCourse = async (courseId: string, userId: string) => {
   const course = await prisma.course.findUnique({
@@ -64,7 +69,7 @@ const CourseIdPage = async ({
       <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2">
         <div>
           <div className="flex items-center gap-x-2">
-            <MdOutlineDashboardCustomize fill="blue" size={25} />
+            <LuLayoutDashboard stroke="blue" size={25} />
             <h2 className="text-xl">Customize your course</h2>
           </div>
           <EditForm
@@ -76,13 +81,16 @@ const CourseIdPage = async ({
         <div className="space-y-6">
           <div>
             <div className="flex items-center gap-x-2">
+              <LuListChecks stroke="blue" size={25} />
               <h2 className="text-xl">Course chapters</h2>
             </div>
           </div>
           <div>
             <div className="flex items-center gap-x-2">
+              <LuCircleDollarSign stroke="blue" size={25} />
               <h2 className="text-xl">Sell your course</h2>
             </div>
+            <PriceForm courseId={courseId} initialData={course} />
           </div>
           <div>
             <div className="flex items-center gap-x-2">

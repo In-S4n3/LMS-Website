@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ActionIcon, Select, TextInput, Textarea } from '@mantine/core';
 import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { FaRegEdit } from 'react-icons/fa';
@@ -26,7 +27,7 @@ export const EditForm = ({
   categories: Record<string, any>[];
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const { refresh } = useRouter();
   const toggleEdit = () => setIsEditing((current) => !current);
   const editForm = useForm<z.infer<typeof EditFormSchema>>({
     resolver: zodResolver(EditFormSchema),
@@ -37,6 +38,7 @@ export const EditForm = ({
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success('Course updated');
+      refresh();
     } catch (err) {
       console.log(err);
       toast.error('Something went wrong');
@@ -52,6 +54,8 @@ export const EditForm = ({
       toast.error('Something went wrong');
     }
   };
+
+  const { isSubmitting } = editForm.formState;
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -168,7 +172,11 @@ export const EditForm = ({
             </div>
           </div>
           <div>
-            <Button type="submit" className="flex w-full justify-center">
+            <Button
+              type="submit"
+              className="flex w-full justify-center"
+              loading={isSubmitting}
+            >
               Edit
             </Button>
           </div>
