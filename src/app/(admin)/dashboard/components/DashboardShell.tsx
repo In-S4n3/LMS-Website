@@ -38,8 +38,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       header={{ height: 60 }}
       navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
       padding="md"
+      className="bg-gradient-to-br from-indigo-100 to-white"
     >
-      <AppShell.Header className="border-neutral-800 bg-neutral-900">
+      <AppShell.Header className="border-neutral-900 bg-gradient-to-r from-neutral-900 to-indigo-950">
         <Group h="100%" px="md">
           <Burger
             opened={opened}
@@ -59,7 +60,10 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </Link>
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md" className="flex justify-between bg-neutral-900">
+      <AppShell.Navbar
+        p="md"
+        className="flex justify-between border-neutral-900 bg-gradient-to-b from-neutral-900 to-indigo-950"
+      >
         <div>
           {navItems.map((item, index) => (
             <Link

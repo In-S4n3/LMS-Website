@@ -8,7 +8,7 @@ export const UserButton = ({ user }: { user: any }) => {
     <Menu shadow="md" trigger="hover">
       <MenuTarget>
         <Button className="size-fit rounded-full">
-          <div className="flex size-fit w-full items-center gap-x-4 rounded-full bg-neutral-800 pr-4">
+          <div className="flex size-fit w-full items-center gap-x-4 rounded-full bg-black pr-4">
             <Avatar variant="filled" radius="xl" size="lg" src={user?.image} />
             <p className="font-semibold text-indigo-300">{user?.name}</p>
           </div>

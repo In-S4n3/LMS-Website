@@ -106,6 +106,12 @@ export const ImageSchema = z.object({
   }),
 });
 
+export const AttachmentSchema = z.object({
+  imageUrl: z.string().min(1, {
+    message: 'Attachment is required',
+  }),
+});
+
 export const PriceSchema = z.object({
   price: z.coerce.number(),
 });

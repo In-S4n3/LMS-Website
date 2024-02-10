@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { IoIosAttach } from 'react-icons/io';
 import {
   LuCircleDollarSign,
   LuLayoutDashboard,
@@ -8,6 +9,7 @@ import {
 import { auth } from '@/auth';
 import { prisma } from '@/lib/prismaClient';
 
+import { CourseAttachments } from './components/CourseAttachments';
 import { EditForm } from './components/EditForm';
 import { PriceForm } from './components/PriceForm';
 
@@ -94,8 +96,10 @@ const CourseIdPage = async ({
           </div>
           <div>
             <div className="flex items-center gap-x-2">
+              <IoIosAttach fill="blue" size={25} />
               <h2 className="text-xl">Resources & Attachments</h2>
             </div>
+            <CourseAttachments courseId={courseId} />
           </div>
         </div>
       </div>
